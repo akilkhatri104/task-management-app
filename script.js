@@ -19,12 +19,14 @@ form.addEventListener('submit',(e) => {
     const description = e.target.querySelector('#description-input').value;
     const status = e.target.querySelector('#status-input').value
 
-    tasks.push({
+    const task = {
         'title':title,
         'description':description,
         'status': status
-    })  
-    
+    }
+    tasks.push(task)  
+    displayTask(task);
+
     formDialog.close()
 })
 
@@ -32,57 +34,66 @@ const tasksField = document.querySelector('#tasks')
 const currentlyShowing = document.querySelector('#currently-showing')
 
 const allBtn = document.querySelector('#all-tasks-btn')
+const pendingBtn = document.querySelector('#pending-tasks-btn')
+const inProgressBtn = document.querySelector('#inprogress-tasks-btn')
+const allStatusBtns = [allBtn,pendingBtn,inProgressBtn]
+const allStatusDivs = document.querySelector('#tasks').childNodes
+console.log(allStatusDivs);
+
 allBtn.addEventListener('click',(e) => {
     currentlyShowing.innerHTML = 'All Tasks'
-    document.querySelector('#tasks').innerHTML = ''
+    allStatusDivs.forEach(child => {
+        if(child.nodeName == 'DIV')
+            child.style.display = 'none'
+    })
 
-    tasks.forEach( task => {
-        console.log(task);
-        displayTask(task)
-    } )
+    document.querySelector('#all-tasks').style.display = 'block'
+    
 })
 
-const pendingBtn = document.querySelector('#pending-tasks-btn')
 pendingBtn.addEventListener('click',e => {
-    document.querySelector('#tasks').innerHTML = ''
+    
     currentlyShowing.innerHTML = 'Pending Tasks'
-
-    tasks.forEach(task => {
-        if(task.status == 'pending')
-        displayTask(task)
-        console.log(task);
-            
+    allStatusDivs.forEach(child => {
+        if(child.nodeName == 'DIV')
+            child.style.display = 'none'
     })
 
+    document.querySelector('#pending-tasks').style.display = 'block'
+
+    
 })
-
-const inProgressBtn = document.querySelector('#inprogress-tasks-btn')
 inProgressBtn.addEventListener('click', () => {
-    document.querySelector('#tasks').innerHTML = ''
     currentlyShowing.innerHTML = 'In Progress Tasks'
-    tasks.forEach(task => {
-        if(task.status == 'inprogress')
-        displayTask(task)
-        console.log(task);
-            
+    
+    allStatusDivs.forEach(child => {
+        if(child.nodeName == 'DIV')
+            child.style.display = 'none'
     })
+
+    document.querySelector('#inprogress-tasks').style.display = 'block'
+    
 })
 
 const completedBtn = document.querySelector('#completed-tasks-btn')
 completedBtn.addEventListener('click',() => {
-    document.querySelector('#tasks').innerHTML = ''
     currentlyShowing.innerHTML = 'Completed Tasks'
-    tasks.forEach(task => {
-        if(task.status == 'completed')
-        displayTask(task)
-        console.log(task);
-            
+    allStatusDivs.forEach(child => {
+        if(child.nodeName == 'DIV')
+            child.style.display = 'none'
     })
+
+    document.querySelector('#completed-tasks').style.display = 'block'
+    
 })
 
 function displayTask(task){
-    const taskListDiv = document.querySelector('#tasks')
+    const allTasksDiv = document.querySelector('#all-tasks')
+    const pendingTaskDiv = document.querySelector('#pending-tasks')
+    const inProgressTaskDiv = document.querySelector('#inprogress-tasks')
+    const completedTaskDiv = document.querySelector('#completed-tasks')
     
+    const createTaskDiv = () => {
     const taskDiv = document.createElement('div')
     taskDiv.className = 'task'
 
@@ -93,6 +104,23 @@ function displayTask(task){
     const desc = document.createElement('p')
     desc.innerHTML = `${task.description}`
     taskDiv.appendChild(desc)
+    return taskDiv
 
-    taskListDiv.appendChild(taskDiv)
+}
+
+    allTasksDiv.appendChild(createTaskDiv())
+    switch (task.status) {
+        case 'pending':
+            pendingTaskDiv.appendChild(createTaskDiv())
+            break;
+        case 'inprogress':
+            inProgressTaskDiv.appendChild(createTaskDiv())
+            break;
+        case 'completed':
+            completedTaskDiv.appendChild(createTaskDiv())
+            break;
+    
+        default:
+            break;
+    }
 }
