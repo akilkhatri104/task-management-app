@@ -26,6 +26,8 @@ form.addEventListener('submit',(e) => {
     }
     tasks.push(task)  
     displayTask(task);
+    console.log(task);
+    
 
     formDialog.close()
 })
@@ -97,11 +99,20 @@ function displayTask(task){
     const taskDiv = document.createElement('div')
     taskDiv.className = 'task'
 
+    let status = undefined
+    if(task.status == 'pending')
+        status = `<span id='pending-icon'>Pending</span>`
+    else if(task.status == 'inprogress')
+        status = `<span id='inprogress-icon'>In-Progress</span>`
+    else
+        status = `<span id='completed-icon'>Completed</span>`
+
     const titleDiv = document.createElement('div')
-    titleDiv.innerHTML = `<p id="task-title">${task.title}</p> <button id="edit-btn">Edit</button> <button id="delete-btn">Delete</button>`
+    titleDiv.innerHTML = `<p id="task-title">${task.title}${status}</p> <button id="edit-btn">Edit</button> <button id="delete-btn">Delete</button>`
     taskDiv.appendChild(titleDiv)
 
     const desc = document.createElement('p')
+    desc.style.fontWeight = '100'
     desc.innerHTML = `${task.description}`
     taskDiv.appendChild(desc)
     return taskDiv

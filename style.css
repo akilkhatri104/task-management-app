@@ -146,3 +146,33 @@ form div select{
 #edit-btn:hover{
     background-color: hsl(120, 100%, 25%);
 }
+
+#pending-icon{
+    background-color: hsl(0, 100%, 57%);
+    color:hsl(0, 0%, 100%);
+    border-radius: 20px;
+    font-size: 0.5em;
+    opacity: 90%;
+    padding: 5px;
+    margin: 0 10px;
+}
+
+#inprogress-icon{
+    background-color: hsl(39, 100%, 41%);
+    color:hsl(0, 0%, 100%);
+    border-radius: 20px;
+    font-size: 0.5em;
+    opacity: 90%;
+    padding: 5px;
+    margin: 0 10px;
+}
+
+#completed-icon{
+    background-color: hsl(131, 100%, 41%);
+    color:hsl(0, 0%, 100%);
+    border-radius: 20px;
+    font-size: 0.5em;
+    opacity: 90%;
+    padding: 5px;
+    margin: 0 10px;
+}
