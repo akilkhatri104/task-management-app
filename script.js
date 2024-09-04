@@ -22,7 +22,7 @@ form.addEventListener('submit',(e) => {
     const title = e.target.querySelector('#title-input').value;
     const description = e.target.querySelector('#description-input').value;
     const status = e.target.querySelector('#status-input').value
-    const id = nanoid(8)
+    const id = nanoid()
 
     const task = {
         'title':title,
@@ -123,7 +123,15 @@ function displayTask(task){
     
     taskDiv.querySelector('#delete-btn').addEventListener('click',e =>{
         deleteTask(task.id)
+    })
+    taskDiv.querySelector('#edit-btn').addEventListener('click',e => {
+        formDialog.showModal()
         
+        document.querySelector('#title-input').value = task.title;
+        document.querySelector('#description-input').value = task.description;
+        document.querySelector('#status-input').value = task.status
+        deleteTask(task.id)
+
     })
 
     const desc = document.createElement('p')

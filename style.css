@@ -109,7 +109,7 @@ form div select{
 }
 
 #tasks{
-    overflow: scroll;
+    overflow-y: scroll;
     max-height: 500px;
 }
 
@@ -176,3 +176,18 @@ form div select{
     padding: 5px;
     margin: 0 10px;
 }
+
+@media only screen and (max-width: 600px) {
+    #main{
+        width: 100%;
+    }  
+    
+    #status-btns{
+        text-align: center;
+        padding: 25px;
+    }
+    
+    #status-btns button{
+        font-size: 1em;
+        margin: 0;
+    }
