@@ -28,8 +28,6 @@ form.addEventListener('submit',(e) => {
         'title':title,
         'description':description,
         'status': status,
-        'id':id,
-        'status': status,
         'id':id
     }
     
