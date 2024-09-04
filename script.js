@@ -2,6 +2,9 @@ const addTaskBtn = document.querySelector('#add-task-btn')
 const formDialog = document.querySelector('#form-dialog')
 const form = document.querySelector('form')
 
+
+
+
 const tasks = []
 
 addTaskBtn.addEventListener('click',(e) => {
@@ -13,23 +16,28 @@ addTaskBtn.addEventListener('click',(e) => {
 })
 
 form.addEventListener('submit',(e) => {
-    e.preventDefault()
+    
+        e.preventDefault()
 
     const title = e.target.querySelector('#title-input').value;
     const description = e.target.querySelector('#description-input').value;
     const status = e.target.querySelector('#status-input').value
+    const id = nanoid(8)
 
     const task = {
         'title':title,
         'description':description,
-        'status': status
+        'status': status,
+        'id':id
     }
+    
     tasks.push(task)  
     displayTask(task);
     console.log(task);
     
 
     formDialog.close()
+    
 })
 
 const tasksField = document.querySelector('#tasks')
