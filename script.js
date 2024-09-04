@@ -28,7 +28,7 @@ form.addEventListener('submit',(e) => {
         'title':title,
         'description':description,
         'status': status,
-        'id':id
+        'id':id,
         'status': status,
         'id':id
     }
@@ -37,6 +37,7 @@ form.addEventListener('submit',(e) => {
     displayTask(task);
     console.log(task);
     
+    saveTasksToLocalStorage()
 
     formDialog.close()
     
@@ -167,4 +168,22 @@ function deleteTask(taskID){
     document.querySelectorAll(`#${taskID}`).forEach(task => {
         task.remove()
     })
+
+    saveTasksToLocalStorage()
 }
+
+
+function saveTasksToLocalStorage() {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function loadTasksFromLocalStorage() {
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+        tasks = JSON.parse(storedTasks);
+        tasks.forEach(task => displayTask(task)); // Display each task
+    }
+}
+
+// Call this function when the page loads
+document.addEventListener('DOMContentLoaded', loadTasksFromLocalStorage);
