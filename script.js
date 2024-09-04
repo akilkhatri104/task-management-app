@@ -5,7 +5,7 @@ const form = document.querySelector('form')
 
 
 
-const tasks = []
+let tasks = []
 
 addTaskBtn.addEventListener('click',(e) => {
     formDialog.showModal()
@@ -106,6 +106,7 @@ function displayTask(task){
     const createTaskDiv = () => {
     const taskDiv = document.createElement('div')
     taskDiv.className = 'task'
+    taskDiv.id = task.id
 
     let status = undefined
     if(task.status == 'pending')
@@ -118,6 +119,12 @@ function displayTask(task){
     const titleDiv = document.createElement('div')
     titleDiv.innerHTML = `<p id="task-title">${task.title}${status}</p> <button id="edit-btn">Edit</button> <button id="delete-btn">Delete</button>`
     taskDiv.appendChild(titleDiv)
+
+    
+    taskDiv.querySelector('#delete-btn').addEventListener('click',e =>{
+        deleteTask(task.id)
+        
+    })
 
     const desc = document.createElement('p')
     desc.style.fontWeight = '100'
@@ -142,4 +149,12 @@ function displayTask(task){
         default:
             break;
     }
+}
+
+function deleteTask(taskID){
+    tasks = tasks.filter(task => task.id != taskID)
+
+    document.querySelectorAll(`#${taskID}`).forEach(task => {
+        task.remove()
+    })
 }
