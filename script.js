@@ -29,6 +29,8 @@ form.addEventListener('submit',(e) => {
         'description':description,
         'status': status,
         'id':id
+        'status': status,
+        'id':id
     }
     
     tasks.push(task)  
