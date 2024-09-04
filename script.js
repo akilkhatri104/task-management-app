@@ -18,11 +18,32 @@ form.addEventListener('submit',(e) => {
     const title = e.target.querySelector('#title-input').value;
     const description = e.target.querySelector('#description-input').value;
     const status = e.target.querySelector('#status-input').value
+    let id = nanoid()
+    
+    // fetch('https://www.uuidgenerator.net/api/version1')
+    // .then(response => {
+    //     if(response.ok){
+    //         console.log(response)
+    //         return response.text()
+    //     }else{
+    //         throw new Error('Some error')
+    //     }
+    // })
+    // .then(data => {
+    //     console.log(typeof data)
+    //     id += data
+    // })
+    // .catch(e => {
+    //     console.error(e)
+    // })
 
+
+    
     const task = {
         'title':title,
         'description':description,
-        'status': status
+        'status': status,
+        'id':id
     }
     tasks.push(task)  
     displayTask(task);
@@ -98,6 +119,7 @@ function displayTask(task){
     const createTaskDiv = () => {
     const taskDiv = document.createElement('div')
     taskDiv.className = 'task'
+    taskDiv.id = `${task.id}`
 
     let status = undefined
     if(task.status == 'pending')

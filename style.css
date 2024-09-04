@@ -109,7 +109,7 @@ form div select{
 }
 
 #tasks{
-    overflow: scroll;
+    overflow-y: scroll;
     max-height: 500px;
 }
 
