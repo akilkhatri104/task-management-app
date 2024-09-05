@@ -2,27 +2,29 @@ const addTaskBtn = document.querySelector('#add-task-btn')
 const formDialog = document.querySelector('#form-dialog')
 const form = document.querySelector('form')
 
-
-
-
 let tasks = []
 
 addTaskBtn.addEventListener('click',(e) => {
-    formDialog.showModal()
+    showForm()
 
     document.querySelector('#close-btn').addEventListener('click',(e) => {
         formDialog.close()
+        form.reset()
     })
 })
 
 form.addEventListener('submit',(e) => {
-    
-        e.preventDefault()
+    e.preventDefault()
 
     const title = e.target.querySelector('#title-input').value;
     const description = e.target.querySelector('#description-input').value;
     const status = e.target.querySelector('#status-input').value
     const id = nanoid()
+
+    if(!title || !description){
+        alert('Please fill out both Title and Description')
+        return
+    }
 
     const task = {
         'title':title,
@@ -33,11 +35,12 @@ form.addEventListener('submit',(e) => {
     
     tasks.push(task)  
     displayTask(task);
-    console.log(task);
+    console.log(task.id);
     
     saveTasksToLocalStorage()
 
     formDialog.close()
+    form.reset()
     
 })
 
@@ -47,6 +50,7 @@ const currentlyShowing = document.querySelector('#currently-showing')
 const allBtn = document.querySelector('#all-tasks-btn')
 const pendingBtn = document.querySelector('#pending-tasks-btn')
 const inProgressBtn = document.querySelector('#inprogress-tasks-btn')
+const completedBtn = document.querySelector('#completed-tasks-btn')
 const allStatusBtns = [allBtn,pendingBtn,inProgressBtn]
 const allStatusDivs = document.querySelector('#tasks').childNodes
 console.log(allStatusDivs);
@@ -86,7 +90,6 @@ inProgressBtn.addEventListener('click', () => {
     
 })
 
-const completedBtn = document.querySelector('#completed-tasks-btn')
 completedBtn.addEventListener('click',() => {
     currentlyShowing.innerHTML = 'Completed Tasks'
     allStatusDivs.forEach(child => {
@@ -126,12 +129,8 @@ function displayTask(task){
         deleteTask(task.id)
     })
     taskDiv.querySelector('#edit-btn').addEventListener('click',e => {
-        formDialog.showModal()
-        
-        document.querySelector('#title-input').value = task.title;
-        document.querySelector('#description-input').value = task.description;
-        document.querySelector('#status-input').value = task.status
         deleteTask(task.id)
+        showForm(task.title,task.description,task.status)
 
     })
 
@@ -163,8 +162,15 @@ function displayTask(task){
 function deleteTask(taskID){
     tasks = tasks.filter(task => task.id != taskID)
 
-    document.querySelectorAll(`#${taskID}`).forEach(task => {
-        task.remove()
+    // document.querySelectorAll(`#${taskID}`).forEach(task => {
+    //     task.remove()
+    // })
+
+    tasksField.childNodes.forEach(taskCategory => {
+        taskCategory.childNodes.forEach(task => {
+            if(task.id == taskID)
+                task.remove()
+        })
     })
 
     saveTasksToLocalStorage()
@@ -185,3 +191,10 @@ function loadTasksFromLocalStorage() {
 
 // Call this function when the page loads
 document.addEventListener('DOMContentLoaded', loadTasksFromLocalStorage);
+
+function showForm(title = "",desc = "",status = "pending"){
+    formDialog.showModal()
+    document.querySelector('#title-input').value = title
+    document.querySelector('#description-input').value = desc
+    document.querySelector('#status-input').value = status
+}

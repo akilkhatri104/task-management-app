@@ -11,7 +11,7 @@
         <h1 id="title">Task Management App</h1>
         <div>
             <p id="currently-showing">All Tasks</p>
-            <button id="add-task-btn">Add New Task</button>
+            <button id="add-task-btn" aria-label="Add a new task">Add New Task</button>
         </div>
         <dialog id="form-dialog">
             <div id="close-btn">x</div>
@@ -20,12 +20,12 @@
 
                 <div>
                     <label for="title-input">Title</label>
-                    <input type="text" name="title" id="title-input">
+                    <input type="text" name="title" id="title-input" placeholder="Do something">
                 </div>
                 
                 <div>
                     <label for="description-input">Description</label>
-                    <textarea id="description-input" name="description" rows="2" cols="30">
+                    <textarea id="description-input" name="description" rows="2" cols="30" placeholder="Here's how I will do something">
                     </textarea>
                 </div><br>
 
