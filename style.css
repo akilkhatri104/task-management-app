@@ -191,4 +191,8 @@ form div select{
         font-size: 1em;
         margin: 0;
     }
+
+    #form-dialog{
+        width: 100%;
+    }
 }
